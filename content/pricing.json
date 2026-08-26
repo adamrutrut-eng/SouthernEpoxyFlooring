@@ -1,0 +1,32 @@
+{
+  "hasPrices": false,
+  "tiers": [
+    {
+      "name": "Garage",
+      "price": null,
+      "inclusions": [
+        "Diamond grinding, crack and spall repair",
+        "Full-broadcast flake in your chosen blend",
+        "Polyaspartic topcoat — drive-on in 24 hours"
+      ]
+    },
+    {
+      "name": "Patio & Basement",
+      "price": null,
+      "inclusions": [
+        "Moisture-mitigating primer for below-grade slabs",
+        "UV-stable finish for covered and exposed concrete",
+        "Seamless, easy-clean surface"
+      ]
+    },
+    {
+      "name": "Commercial",
+      "price": null,
+      "inclusions": [
+        "High-build systems for shops and showrooms",
+        "Scheduling built around minimal downtime",
+        "Anti-skid and safety-line options"
+      ]
+    }
+  ]
+}
