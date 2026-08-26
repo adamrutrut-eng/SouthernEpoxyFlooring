@@ -55,7 +55,7 @@ export default function PricingSection() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))',
           gap: '1.25rem',
         }}
       >
@@ -136,6 +136,7 @@ export default function PricingSection() {
               <a
                 href="#book"
                 onClick={scrollToBook}
+                className="btn-outline"
                 style={{
                   display: 'inline-block',
                   textAlign: 'center',

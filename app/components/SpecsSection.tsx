@@ -19,7 +19,7 @@ const rows: [string, string][] = [
   ['Surface Prep', 'Diamond grinding (CSP 2–3), crack & spall repair'],
   ['Walk-On Time', '4–6 hours'],
   ['Drive-On Time', '24 hours'],
-  ['Abrasion Resistance', 'Polyaspartic wear surface — ASTM D4060 Taber-tested class'],
+  ['Abrasion Resistance', 'Polyaspartic wear surface built for daily vehicle traffic'],
   ['Slip-Resistance Additive', 'Available — clear anti-skid aggregate in the topcoat'],
   ['UV Stability', 'Aliphatic chemistry — non-yellowing, exterior-rated'],
   ...(isTodo(business.warrantyYears)

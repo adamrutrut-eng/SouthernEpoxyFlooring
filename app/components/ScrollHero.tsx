@@ -1,17 +1,17 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { FRAME_COUNT, frameSrc } from '@/lib/heroFrames';
-
-const fadeUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-};
 
 export default function ScrollHero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const reduceMotion = useReducedMotion();
+  const fadeUp = {
+    initial: reduceMotion ? false : { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+  };
 
   useEffect(() => {
     const container = containerRef.current;
@@ -51,10 +51,15 @@ export default function ScrollHero() {
       currentIdx = idx;
     };
 
-    // Nearest already-decoded frame at or below the target, so scrubbing
-    // stays smooth while the tail of the sequence is still loading.
+    // Nearest already-decoded frame at or below the target (falling back
+    // to the nearest above it), so scrubbing stays smooth while parts of
+    // the sequence are still loading or a frame failed.
     const nearestLoaded = (target: number) => {
       for (let i = target; i >= 0; i--) {
+        const img = images[i];
+        if (img && img.complete && img.naturalWidth > 0) return i;
+      }
+      for (let i = target + 1; i < FRAME_COUNT; i++) {
         const img = images[i];
         if (img && img.complete && img.naturalWidth > 0) return i;
       }
@@ -71,6 +76,9 @@ export default function ScrollHero() {
           if (currentIdx === -1) draw(0);
         };
       }
+      // Ask the browser to decode off the main thread ahead of the first
+      // scrub pass; errors (404s before assets land) are expected.
+      img.decode?.().catch(() => {});
       images.push(img);
     }
 
@@ -115,11 +123,11 @@ export default function ScrollHero() {
   return (
     <div ref={containerRef} style={{ height: '300vh', position: 'relative' }}>
       <div
+        className="hero-pane"
         style={{
           position: 'sticky',
           top: 0,
           width: '100vw',
-          height: '100vh',
           overflow: 'hidden',
           background: '#050505',
         }}
@@ -149,6 +157,7 @@ export default function ScrollHero() {
             }}
           >
             <motion.p
+              data-reveal=""
               {...fadeUp}
               transition={{ duration: 0.8, delay: 0.8, ease: [0.25, 0, 0, 1] }}
               className="label"
@@ -156,8 +165,11 @@ export default function ScrollHero() {
             >
               Southern Epoxy Flooring &middot; Georgia
             </motion.p>
+            {/* The h1 stays visible in SSR (position-only animation) so the
+                page has an LCP-eligible text block before hydration. */}
             <motion.h1
-              {...fadeUp}
+              initial={reduceMotion ? false : { y: 24 }}
+              animate={{ y: 0 }}
               transition={{ duration: 0.8, delay: 0.95, ease: [0.25, 0, 0, 1] }}
               style={{
                 fontFamily: 'var(--font-fraunces), serif',
@@ -171,6 +183,7 @@ export default function ScrollHero() {
               A Floor Is a System.
             </motion.h1>
             <motion.p
+              data-reveal=""
               {...fadeUp}
               transition={{ duration: 0.8, delay: 1.1, ease: [0.25, 0, 0, 1] }}
               style={{
@@ -187,12 +200,14 @@ export default function ScrollHero() {
               built for decades.
             </motion.p>
             <motion.div
+              data-reveal=""
               {...fadeUp}
               transition={{ duration: 0.8, delay: 1.25, ease: [0.25, 0, 0, 1] }}
             >
               <a
                 href="#book"
                 onClick={scrollToBook}
+                className="btn-solid"
                 style={{
                   display: 'inline-block',
                   background: '#C97B4A',
@@ -212,6 +227,7 @@ export default function ScrollHero() {
               </a>
             </motion.div>
             <motion.p
+              data-reveal=""
               {...fadeUp}
               transition={{ duration: 0.8, delay: 1.6, ease: [0.25, 0, 0, 1] }}
               style={{

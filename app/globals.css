@@ -49,6 +49,42 @@ body {
   margin: 0 auto;
 }
 
+/* 100dvh tracks the real visible height on mobile so the hero CTA is
+   never hidden behind the browser toolbar; 100vh is the fallback. */
+.hero-pane {
+  height: 100vh;
+  height: 100dvh;
+}
+
+.btn-solid {
+  transition: background-color 200ms ease;
+}
+.btn-solid:hover,
+.btn-solid:focus-visible {
+  background-color: var(--accent-hover) !important;
+}
+
+.btn-outline {
+  transition: background-color 200ms ease, color 200ms ease;
+}
+.btn-outline:hover,
+.btn-outline:focus-visible {
+  background-color: var(--accent) !important;
+  color: #050505 !important;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent-hover);
+  outline-offset: 3px;
+}
+
+.field:focus {
+  border-color: var(--accent) !important;
+  outline: 1px solid rgba(201, 123, 74, 0.5);
+  outline-offset: 1px;
+}
+
 @media (max-width: 768px) {
   .section {
     padding: 5rem 1.25rem;

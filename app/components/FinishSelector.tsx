@@ -1,16 +1,27 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Reveal from './Reveal';
 import finishes from '@/content/finishes.json';
 
 type Finish = { name: string; file: string; blurb: string };
 
 const list = finishes as Finish[];
+const PLACEHOLDER = '/frames/frame_0001.jpg';
 
 export default function FinishSelector() {
   const [active, setActive] = useState(0);
+  const [placeholderOk, setPlaceholderOk] = useState(false);
   const hasFinishes = list.length > 0;
+
+  // Probe the placeholder frame client-side so a 404 never flashes a
+  // broken-image icon (SSR'd <img> errors can fire before hydration).
+  useEffect(() => {
+    if (hasFinishes) return;
+    const img = new Image();
+    img.onload = () => setPlaceholderOk(true);
+    img.src = PLACEHOLDER;
+  }, [hasFinishes]);
 
   return (
     <section className="section" style={{ maxWidth: 1100 }}>
@@ -84,21 +95,20 @@ export default function FinishSelector() {
             ))
           ) : (
             <>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/frames/frame_0001.jpg"
-                alt="Full-broadcast flake epoxy floor"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
-                }}
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                }}
-              />
+              {placeholderOk && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={PLACEHOLDER}
+                  alt="Full-broadcast flake epoxy floor"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                  }}
+                />
+              )}
               <p
                 style={{
                   position: 'absolute',
@@ -126,7 +136,7 @@ export default function FinishSelector() {
         <>
           <Reveal order={4}>
             <div
-              role="tablist"
+              role="group"
               aria-label="Floor finishes"
               style={{
                 display: 'flex',
@@ -138,8 +148,7 @@ export default function FinishSelector() {
               {list.map((f, i) => (
                 <button
                   key={f.file}
-                  role="tab"
-                  aria-selected={i === active}
+                  aria-pressed={i === active}
                   onClick={() => setActive(i)}
                   style={{
                     background: i === active ? 'rgba(201,123,74,0.12)' : '#0d0d0d',

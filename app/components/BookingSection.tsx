@@ -48,6 +48,12 @@ export default function BookingSection({
     e.preventDefault();
     const form = e.currentTarget;
     const data = Object.fromEntries(new FormData(form).entries());
+    // Honeypot: real visitors never see or fill this field.
+    if (typeof data.company === 'string' && data.company !== '') {
+      setStatus('sent');
+      form.reset();
+      return;
+    }
     setStatus('sending');
     try {
       const res = await fetch('/api/quote', {
@@ -92,7 +98,7 @@ export default function BookingSection({
             className="calendly-inline-widget"
             data-url={`${business.calendlyUrl}?hide_gdpr_banner=1&background_color=0d0d0d&text_color=F2EFEA&primary_color=C97B4A`}
             style={{
-              minWidth: 320,
+              minWidth: 'min(320px, 100%)',
               height: 700,
               borderRadius: 16,
               overflow: 'hidden',
@@ -171,7 +177,7 @@ export default function BookingSection({
             style={{
               marginTop: '3.5rem',
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))',
               gap: '1rem',
             }}
           >
@@ -187,33 +193,66 @@ export default function BookingSection({
             >
               Or send project details
             </p>
-            <input name="name" placeholder="Name" required style={inputStyle} />
+            <input
+              name="name"
+              placeholder="Name"
+              aria-label="Name"
+              required
+              className="field"
+              style={inputStyle}
+            />
             <input
               name="phone"
               type="tel"
               placeholder="Phone"
+              aria-label="Phone"
               required
+              className="field"
               style={inputStyle}
             />
             <input
               name="email"
               type="email"
               placeholder="Email"
+              aria-label="Email"
               required
+              className="field"
               style={inputStyle}
             />
-            <input name="city" placeholder="City" style={inputStyle} />
+            <input
+              name="city"
+              placeholder="City"
+              aria-label="City"
+              className="field"
+              style={inputStyle}
+            />
+            <input
+              name="company"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                left: '-9999px',
+                width: 1,
+                height: 1,
+                opacity: 0,
+              }}
+            />
             <textarea
               name="message"
               placeholder="Tell us about the space — garage, patio, basement, square footage…"
+              aria-label="Project details"
               rows={4}
               required
+              className="field"
               style={{ ...inputStyle, gridColumn: '1 / -1', resize: 'vertical' }}
             />
             <div style={{ gridColumn: '1 / -1' }}>
               <button
                 type="submit"
                 disabled={status === 'sending'}
+                className="btn-solid"
                 style={{
                   background: '#C97B4A',
                   color: '#050505',
@@ -231,16 +270,19 @@ export default function BookingSection({
               >
                 {status === 'sending' ? 'Sending…' : 'Request Quote'}
               </button>
-              {status === 'sent' && (
-                <p style={{ color: '#C97B4A', marginTop: '0.9rem', fontSize: '0.9rem' }}>
-                  Got it — we&rsquo;ll be in touch within one business day.
-                </p>
-              )}
-              {status === 'error' && (
-                <p style={{ color: '#DDD8D2', marginTop: '0.9rem', fontSize: '0.9rem' }}>
-                  Something went wrong — please call or email us instead.
-                </p>
-              )}
+              <div aria-live="polite">
+                {status === 'sent' && (
+                  <p style={{ color: '#C97B4A', marginTop: '0.9rem', fontSize: '0.9rem' }}>
+                    Got it — we&rsquo;ll reach out to schedule your estimate.
+                  </p>
+                )}
+                {status === 'error' && (
+                  <p style={{ color: '#DDD8D2', marginTop: '0.9rem', fontSize: '0.9rem' }}>
+                    Something went wrong — please email us at the address
+                    above instead.
+                  </p>
+                )}
+              </div>
             </div>
           </form>
         </Reveal>

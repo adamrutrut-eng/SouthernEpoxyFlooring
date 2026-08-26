@@ -47,14 +47,24 @@ export default function Footer() {
           {!isTodo(business.phone) && (
             <a
               href={`tel:${business.phone.replace(/[^+\d]/g, '')}`}
-              style={{ color: '#DDD8D2', textDecoration: 'none' }}
+              style={{
+                color: '#DDD8D2',
+                textDecoration: 'none',
+                padding: '0.6rem 0',
+                display: 'inline-block',
+              }}
             >
               {business.phone}
             </a>
           )}
           <a
             href={`mailto:${business.email}`}
-            style={{ color: '#DDD8D2', textDecoration: 'none' }}
+            style={{
+              color: '#DDD8D2',
+              textDecoration: 'none',
+              padding: '0.6rem 0',
+              display: 'inline-block',
+            }}
           >
             {business.email}
           </a>

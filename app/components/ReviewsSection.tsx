@@ -3,14 +3,21 @@
 import Reveal from './Reveal';
 import reviews from '@/content/reviews.json';
 
-type Review = { name: string; city: string; text: string };
+// `rating` is optional on purpose: stars render only when the source
+// review actually carries one — never invent a rating.
+type Review = { name: string; city: string; text: string; rating?: number };
 
 const list = reviews as Review[];
 
-function Stars() {
+function Stars({ rating }: { rating: number }) {
+  const count = Math.max(1, Math.min(5, Math.round(rating)));
   return (
-    <div style={{ display: 'flex', gap: 3, marginBottom: '1rem' }} aria-label="5 out of 5 stars">
-      {Array.from({ length: 5 }).map((_, i) => (
+    <div
+      role="img"
+      style={{ display: 'flex', gap: 3, marginBottom: '1rem' }}
+      aria-label={`${count} out of 5 stars`}
+    >
+      {Array.from({ length: count }).map((_, i) => (
         <svg key={i} viewBox="0 0 24 24" width="14" height="14" fill="#C97B4A" aria-hidden="true">
           <path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.5L12 17.3l-5.9 3.2 1.3-6.5-4.9-4.6 6.6-.8L12 2.5z" />
         </svg>
@@ -48,7 +55,7 @@ export default function ReviewsSection() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))',
           gap: '1.25rem',
         }}
       >
@@ -65,7 +72,7 @@ export default function ReviewsSection() {
                 flexDirection: 'column',
               }}
             >
-              <Stars />
+              {typeof r.rating === 'number' && <Stars rating={r.rating} />}
               <blockquote
                 style={{
                   color: '#DDD8D2',

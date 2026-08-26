@@ -52,8 +52,8 @@ export default function ClosingCTA() {
             margin: '0 auto 3rem',
           }}
         >
-          One visit to measure, one day to install — and a floor the house
-          gets judged by.
+          One visit to measure, most installs done in a day — and a floor
+          the house gets judged by.
         </p>
       </Reveal>
       <Reveal order={3}>

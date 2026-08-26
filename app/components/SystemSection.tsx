@@ -16,7 +16,7 @@ const layers = [
   {
     n: '03',
     name: '100% Solids Epoxy Base',
-    detail: 'The structural coat — zero solvents, full thickness, permanent grip',
+    detail: 'The structural coat — zero solvents, full thickness, lasting grip',
   },
   {
     n: '04',
@@ -178,7 +178,7 @@ export default function SystemSection() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))',
           gap: '1.25rem',
         }}
       >

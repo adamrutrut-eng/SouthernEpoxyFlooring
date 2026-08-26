@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   description:
     `Premium epoxy flooring and garage floor coatings across ${business.state}. ` +
     `100% solids epoxy, full-broadcast flake, and UV-stable polyaspartic topcoats — ` +
-    `installed in one day, built for decades.${cityPhrase} Book a free on-site estimate.`,
+    `most floors installed in a day, built for decades.${cityPhrase} Book a free on-site estimate.`,
   keywords: [
     'epoxy flooring',
     'garage floor coating',
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     title:
       'Southern Epoxy Flooring | Premium Garage & Concrete Coatings in Georgia',
     description:
-      'Five engineered layers. One seamless finish. Installed in a day, built for decades. Book a free on-site estimate.',
+      'Five engineered layers. One seamless finish. Built for decades. Book a free on-site estimate.',
     url: `https://${business.domain}`,
     siteName: business.name,
     locale: 'en_US',
@@ -51,12 +51,37 @@ export const metadata: Metadata = {
   },
 };
 
+// Structured data for local search — only fields with real values are
+// included (never TODO placeholders).
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'HomeAndConstructionBusiness',
+  name: business.name,
+  url: `https://${business.domain}`,
+  email: business.email,
+  description:
+    'Premium epoxy and polyaspartic concrete floor coatings for garages, patios, basements, and commercial spaces.',
+  areaServed:
+    cities.length > 0
+      ? cities.map((c) => ({ '@type': 'City', name: `${c}, ${business.state}` }))
+      : { '@type': 'State', name: business.state },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${fraunces.variable} ${archivo.variable}`}>
-      <body>{children}</body>
+      <body>
+        <noscript>
+          <style>{`[data-reveal]{opacity:1 !important;transform:none !important}`}</style>
+        </noscript>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+        {children}
+      </body>
     </html>
   );
 }
