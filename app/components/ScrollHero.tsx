@@ -24,6 +24,9 @@ export default function ScrollHero() {
     const images: HTMLImageElement[] = [];
     let currentIdx = -1;
     let rafId = 0;
+    // Phones get the 960px frame set — a quarter of the bytes, and still
+    // sharper than a DPR-2 phone canvas needs.
+    const frameSize = window.innerWidth <= 820 ? 'sm' : 'lg';
 
     const sizeCanvas = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -70,7 +73,7 @@ export default function ScrollHero() {
 
     for (let i = 0; i < FRAME_COUNT; i++) {
       const img = new Image();
-      img.src = frameSrc(i);
+      img.src = frameSrc(i, frameSize);
       if (i === 0) {
         img.onload = () => {
           if (currentIdx === -1) draw(0);

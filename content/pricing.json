@@ -1,31 +1,68 @@
 {
-  "hasPrices": false,
+  "hasPrices": true,
+  "note": "Estimated ranges from the company's own project guide — the exact number comes from a free on-site quote.",
   "tiers": [
     {
-      "name": "Garage",
-      "price": null,
+      "name": "Flake",
+      "price": "$5.50–8 / sq ft",
       "inclusions": [
-        "Diamond grinding, crack and spall repair",
-        "Full-broadcast flake in your chosen blend",
-        "Polyaspartic topcoat — drive-on in 24 hours"
+        "Pigmented base with full flake broadcast",
+        "One-day install for most garages",
+        "Ten standard blends, or custom-matched"
       ]
     },
     {
-      "name": "Patio & Basement",
-      "price": null,
+      "name": "Solid Color",
+      "price": "$8–12 / sq ft",
       "inclusions": [
-        "Moisture-mitigating primer for below-grade slabs",
-        "UV-stable finish for covered and exposed concrete",
-        "Seamless, easy-clean surface"
+        "Two coats of pigmented epoxy",
+        "Optional primer for worn slabs",
+        "Twelve popular colors"
       ]
     },
     {
-      "name": "Commercial",
-      "price": null,
+      "name": "Quartz",
+      "price": "$10–14 / sq ft",
       "inclusions": [
-        "High-build systems for shops and showrooms",
-        "Scheduling built around minimal downtime",
-        "Anti-skid and safety-line options"
+        "Four layers — pigment plus three epoxy",
+        "Slip-resistant texture, made for wet areas",
+        "Ten premixed blends, or any custom color"
+      ]
+    },
+    {
+      "name": "Metallic",
+      "price": "$10–18 / sq ft",
+      "inclusions": [
+        "Primer, base, and dirty-pour finish",
+        "A one-of-a-kind liquid-marble look",
+        "Twelve popular metallic colors"
+      ]
+    },
+    {
+      "name": "Glitter",
+      "price": "$15–20 / sq ft",
+      "inclusions": [
+        "Primer, base, and glitter broadcast",
+        "UV-inhibited industrial-grade sparkle",
+        "Ten popular glitter colors"
+      ]
+    },
+    {
+      "name": "3D & Logo Floors",
+      "price": "$28 / sq ft",
+      "inclusions": [
+        "Primer, base, embedded graphic, clear epoxy",
+        "Crisp logos and 3D effects in the floor",
+        "Built for showrooms and shops"
+      ]
+    },
+    {
+      "name": "Polished Concrete",
+      "price": "$6–10 / sq ft",
+      "inclusions": [
+        "Ten-step diamond grinding process",
+        "Ask about the budget 2-step grind and seal",
+        "No-wax, high-luster finish"
       ]
     }
   ]

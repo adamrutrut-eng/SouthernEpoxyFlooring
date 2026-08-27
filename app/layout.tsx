@@ -34,6 +34,9 @@ export const metadata: Metadata = {
     'garage floor coating',
     'polyaspartic floor coating',
     'flake epoxy floor',
+    'metallic epoxy floor',
+    'quartz epoxy flooring',
+    'polished concrete',
     'concrete coatings',
     'epoxy flooring South Georgia',
     'epoxy flooring North Florida',
@@ -59,6 +62,10 @@ const structuredData = {
   name: business.name,
   url: `https://${business.domain}`,
   email: business.email,
+  ...(business.phone.toUpperCase().includes('TODO')
+    ? {}
+    : { telephone: business.phone }),
+  slogan: business.tagline,
   description:
     'Premium epoxy and polyaspartic concrete floor coatings for garages, patios, basements, and commercial spaces.',
   areaServed:

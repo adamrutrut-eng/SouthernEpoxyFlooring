@@ -64,6 +64,17 @@ if (fs.existsSync(heroSrc)) {
     path.join(framesDir, 'frame_%04d.jpg'),
   ], { stdio: 'inherit' });
 
+  // Smaller set for phones (see lib/heroFrames.ts).
+  const framesSmDir = path.join(root, 'public', 'frames-sm');
+  fs.rmSync(framesSmDir, { recursive: true, force: true });
+  fs.mkdirSync(framesSmDir, { recursive: true });
+  execFileSync('ffmpeg', [
+    '-i', heroSrc,
+    '-vf', 'fps=24,scale=960:-1',
+    '-q:v', '4',
+    path.join(framesSmDir, 'frame_%04d.jpg'),
+  ], { stdio: 'inherit' });
+
   const frameCount = fs
     .readdirSync(framesDir)
     .filter((f) => /^frame_\d{4}\.jpg$/.test(f)).length;

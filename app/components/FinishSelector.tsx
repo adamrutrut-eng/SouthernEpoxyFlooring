@@ -56,8 +56,8 @@ export default function FinishSelector() {
             marginBottom: '2.5rem',
           }}
         >
-          Every blend below is the identical space — only the flake changes.
-          Tap a finish to try it on.
+          Every image below is the identical space — only the floor changes.
+          Tap a color family to try it on.
         </p>
       </Reveal>
 
@@ -186,6 +186,22 @@ export default function FinishSelector() {
             }}
           >
             {list[active]?.blurb}
+          </p>
+          <p
+            style={{
+              marginTop: '1.6rem',
+              color: '#8B8B8B',
+              fontWeight: 300,
+              fontSize: '0.82rem',
+              lineHeight: 1.7,
+              maxWidth: 640,
+            }}
+          >
+            Shown: representative visualizations. Standard flake blends —
+            Wombat, Gravel, Orbit, Tidal Wave, Cabin Fever, Outback,
+            Creekbed, Shoreline, Domino, and Nightfall — plus custom blends
+            matched to any decor. Quartz, metallic, glitter, and solid-color
+            systems each carry their own color range.
           </p>
         </>
       )}

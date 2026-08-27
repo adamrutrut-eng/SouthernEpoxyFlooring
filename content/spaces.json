@@ -1,1 +1,17 @@
-[]
+[
+  {
+    "name": "Basement",
+    "file": "basement.jpg",
+    "blurb": "Basements sealed against moisture, finished like living space."
+  },
+  {
+    "name": "Patio",
+    "file": "patio.jpg",
+    "blurb": "Covered patios and outdoor slabs — UV-stable, weather-ready."
+  },
+  {
+    "name": "Showroom",
+    "file": "showroom.jpg",
+    "blurb": "Showrooms and shop floors that carry real traffic."
+  }
+]

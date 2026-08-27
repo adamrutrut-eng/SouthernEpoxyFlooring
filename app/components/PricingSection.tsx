@@ -19,7 +19,7 @@ export default function PricingSection() {
     <section className="section">
       <Reveal order={0}>
         <p className="label" style={{ marginBottom: '1rem' }}>
-          Straightforward Scope
+          Systems &amp; Pricing
         </p>
       </Reveal>
       <Reveal order={1}>
@@ -44,12 +44,14 @@ export default function PricingSection() {
             fontWeight: 300,
             fontSize: '0.95rem',
             lineHeight: 1.6,
-            maxWidth: 520,
+            maxWidth: 560,
             marginBottom: '3rem',
           }}
         >
-          Condition, square footage, and finish drive the number — so we quote
-          in person, on your concrete, and the quote is free.
+          Seven ways to finish concrete, with honest estimated ranges.
+          Condition, square footage, and finish drive the final number — so
+          the exact quote happens in person, on your slab, and it&rsquo;s
+          free.
         </p>
       </Reveal>
       <div
@@ -93,7 +95,7 @@ export default function PricingSection() {
                   marginBottom: '1.5rem',
                 }}
               >
-                {hasPrices && tier.price ? `From ${tier.price}` : 'Quoted on-site'}
+                {hasPrices && tier.price ? `est. ${tier.price}` : 'Quoted on-site'}
               </p>
               <ul
                 style={{

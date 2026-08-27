@@ -1,1 +1,27 @@
-[]
+[
+  {
+    "name": "Black & White",
+    "file": "tuxedo.jpg",
+    "blurb": "Crisp, formal, hides tire marks — the Wombat and Domino family."
+  },
+  {
+    "name": "Cool Grays",
+    "file": "gravel.jpg",
+    "blurb": "Quiet depth, the modern default — the Gravel and Nightfall family."
+  },
+  {
+    "name": "Warm Neutrals",
+    "file": "saddle.jpg",
+    "blurb": "Reads like stone underfoot — the Creekbed and Shoreline family."
+  },
+  {
+    "name": "Earth Tones",
+    "file": "outback.jpg",
+    "blurb": "Forgiving, organic, warm — the Outback and Cabin Fever family."
+  },
+  {
+    "name": "Metallic",
+    "file": "slate-metallic.jpg",
+    "blurb": "Liquid-marble metallic epoxy — a system of its own."
+  }
+]

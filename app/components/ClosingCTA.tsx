@@ -27,11 +27,14 @@ export default function ClosingCTA() {
           style={{
             width: 'min(220px, 55vw)',
             height: 'auto',
-            margin: '0 auto 1.6rem',
+            margin: '0 auto 1.2rem',
             display: 'block',
             mixBlendMode: 'screen',
           }}
         />
+        <p className="label" style={{ marginBottom: '1.6rem' }}>
+          Clean. Modern. Forever.
+        </p>
       </Reveal>
       <Reveal order={1}>
         <h2
