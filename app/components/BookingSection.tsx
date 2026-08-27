@@ -11,6 +11,12 @@ const calendlyReady =
   !isTodo(business.calendlyUrl) &&
   business.calendlyUrl.startsWith('https://calendly.com/');
 
+// Where quote requests actually land. Falls back to the public contact
+// address if no dedicated quote inbox is configured.
+const quoteTo = !isTodo((business as Record<string, unknown>).quoteEmail)
+  ? (business as { quoteEmail: string }).quoteEmail
+  : business.email;
+
 const inputStyle: React.CSSProperties = {
   width: '100%',
   background: '#0d0d0d',
@@ -29,9 +35,9 @@ export default function BookingSection({
 }: {
   smtpConfigured: boolean;
 }) {
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>(
-    'idle'
-  );
+  const [status, setStatus] = useState<
+    'idle' | 'sending' | 'sent' | 'mailto' | 'error'
+  >('idle');
 
   useEffect(() => {
     if (!calendlyReady) return;
@@ -47,13 +53,38 @@ export default function BookingSection({
   async function submitQuote(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
-    const data = Object.fromEntries(new FormData(form).entries());
+    const data = Object.fromEntries(new FormData(form).entries()) as Record<
+      string,
+      string
+    >;
     // Honeypot: real visitors never see or fill this field.
     if (typeof data.company === 'string' && data.company !== '') {
       setStatus('sent');
       form.reset();
       return;
     }
+
+    if (!smtpConfigured) {
+      // No mail server configured yet: open the visitor's own email app
+      // with everything pre-filled instead.
+      const subject = `Free estimate request — ${data.name || ''}${
+        data.city ? ` (${data.city})` : ''
+      }`;
+      const body = [
+        `Name: ${data.name || ''}`,
+        `Phone: ${data.phone || ''}`,
+        `Email: ${data.email || ''}`,
+        `City: ${data.city || ''}`,
+        '',
+        data.message || '',
+      ].join('\n');
+      window.location.href = `mailto:${quoteTo}?subject=${encodeURIComponent(
+        subject
+      )}&body=${encodeURIComponent(body)}`;
+      setStatus('mailto');
+      return;
+    }
+
     setStatus('sending');
     try {
       const res = await fetch('/api/quote', {
@@ -73,7 +104,7 @@ export default function BookingSection({
     <section id="book" className="section" style={{ maxWidth: 1000 }}>
       <Reveal order={0}>
         <p className="label" style={{ marginBottom: '1rem' }}>
-          Book a Free In-Person Estimate
+          Request a Free Estimate
         </p>
       </Reveal>
       <Reveal order={1}>
@@ -85,15 +116,40 @@ export default function BookingSection({
             lineHeight: 1.12,
             color: '#F2EFEA',
             maxWidth: 640,
-            marginBottom: '2.5rem',
+            marginBottom: '1.2rem',
           }}
         >
           We measure. We quote. You decide.
         </h2>
       </Reveal>
-
       <Reveal order={2}>
-        {calendlyReady ? (
+        <p
+          style={{
+            color: '#DDD8D2',
+            fontWeight: 300,
+            fontSize: '0.95rem',
+            lineHeight: 1.6,
+            maxWidth: 520,
+            marginBottom: '2.2rem',
+          }}
+        >
+          Tell us about the space — or call or text{' '}
+          {!isTodo(business.phone) ? (
+            <a
+              href={`tel:${business.phone.replace(/[^+\d]/g, '')}`}
+              style={{ color: '#0DA0D4', textDecoration: 'none', fontWeight: 500 }}
+            >
+              {business.phone}
+            </a>
+          ) : (
+            'us'
+          )}{' '}
+          — and we&rsquo;ll schedule your free on-site estimate.
+        </p>
+      </Reveal>
+
+      {calendlyReady && (
+        <Reveal order={2}>
           <div
             className="calendly-inline-widget"
             data-url={`${business.calendlyUrl}?hide_gdpr_banner=1&background_color=0d0d0d&text_color=F2EFEA&primary_color=0DA0D4`}
@@ -103,190 +159,130 @@ export default function BookingSection({
               borderRadius: 16,
               overflow: 'hidden',
               border: '1px solid rgba(13,160,212,0.18)',
+              marginBottom: '2.5rem',
             }}
           />
-        ) : (
-          <div
-            style={{
-              background: '#0d0d0d',
-              border: '1px solid rgba(13,160,212,0.18)',
-              borderRadius: 16,
-              padding: '3rem 2rem',
-              textAlign: 'center',
-            }}
-          >
-            <p
-              style={{
-                color: '#DDD8D2',
-                fontWeight: 300,
-                fontSize: '1rem',
-                lineHeight: 1.6,
-                maxWidth: 460,
-                margin: '0 auto',
-              }}
-            >
-              Online booking is being connected. Reach out directly and
-              we&rsquo;ll schedule your free on-site estimate.
-            </p>
-          </div>
-        )}
-      </Reveal>
-
-      <Reveal order={3}>
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '1rem 2.5rem',
-            marginTop: '2rem',
-            alignItems: 'center',
-          }}
-        >
-          {!isTodo(business.phone) && (
-            <a
-              href={`tel:${business.phone.replace(/[^+\d]/g, '')}`}
-              style={{
-                color: '#F2EFEA',
-                textDecoration: 'none',
-                fontSize: '1rem',
-                fontWeight: 500,
-                letterSpacing: '0.02em',
-              }}
-            >
-              {business.phone}
-            </a>
-          )}
-          <a
-            href={`mailto:${business.email}`}
-            style={{
-              color: '#0DA0D4',
-              textDecoration: 'none',
-              fontSize: '0.95rem',
-              fontWeight: 400,
-            }}
-          >
-            {business.email}
-          </a>
-        </div>
-      </Reveal>
-
-      {smtpConfigured && (
-        <Reveal order={4}>
-          <form
-            onSubmit={submitQuote}
-            style={{
-              marginTop: '3.5rem',
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))',
-              gap: '1rem',
-            }}
-          >
-            <p
-              style={{
-                gridColumn: '1 / -1',
-                color: '#8B8B8B',
-                fontSize: '0.8rem',
-                letterSpacing: '0.14em',
-                textTransform: 'uppercase',
-                fontWeight: 500,
-              }}
-            >
-              Or send project details
-            </p>
-            <input
-              name="name"
-              placeholder="Name"
-              aria-label="Name"
-              required
-              className="field"
-              style={inputStyle}
-            />
-            <input
-              name="phone"
-              type="tel"
-              placeholder="Phone"
-              aria-label="Phone"
-              required
-              className="field"
-              style={inputStyle}
-            />
-            <input
-              name="email"
-              type="email"
-              placeholder="Email"
-              aria-label="Email"
-              required
-              className="field"
-              style={inputStyle}
-            />
-            <input
-              name="city"
-              placeholder="City"
-              aria-label="City"
-              className="field"
-              style={inputStyle}
-            />
-            <input
-              name="company"
-              tabIndex={-1}
-              autoComplete="off"
-              aria-hidden="true"
-              style={{
-                position: 'absolute',
-                left: '-9999px',
-                width: 1,
-                height: 1,
-                opacity: 0,
-              }}
-            />
-            <textarea
-              name="message"
-              placeholder="Tell us about the space — garage, patio, basement, square footage…"
-              aria-label="Project details"
-              rows={4}
-              required
-              className="field"
-              style={{ ...inputStyle, gridColumn: '1 / -1', resize: 'vertical' }}
-            />
-            <div style={{ gridColumn: '1 / -1' }}>
-              <button
-                type="submit"
-                disabled={status === 'sending'}
-                className="btn-solid"
-                style={{
-                  background: '#0DA0D4',
-                  color: '#050505',
-                  border: 'none',
-                  fontFamily: 'var(--font-archivo), sans-serif',
-                  fontWeight: 500,
-                  fontSize: '0.7rem',
-                  letterSpacing: '0.18em',
-                  textTransform: 'uppercase',
-                  padding: '0.9rem 2.6rem',
-                  borderRadius: 40,
-                  cursor: status === 'sending' ? 'wait' : 'pointer',
-                  opacity: status === 'sending' ? 0.7 : 1,
-                }}
-              >
-                {status === 'sending' ? 'Sending…' : 'Request Quote'}
-              </button>
-              <div aria-live="polite">
-                {status === 'sent' && (
-                  <p style={{ color: '#0DA0D4', marginTop: '0.9rem', fontSize: '0.9rem' }}>
-                    Got it — we&rsquo;ll reach out to schedule your estimate.
-                  </p>
-                )}
-                {status === 'error' && (
-                  <p style={{ color: '#DDD8D2', marginTop: '0.9rem', fontSize: '0.9rem' }}>
-                    Something went wrong — please email us at the address
-                    above instead.
-                  </p>
-                )}
-              </div>
-            </div>
-          </form>
         </Reveal>
       )}
+
+      <Reveal order={3}>
+        <form
+          onSubmit={submitQuote}
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))',
+            gap: '1rem',
+            background: 'rgba(13,13,13,0.78)',
+            border: '1px solid rgba(13,160,212,0.18)',
+            borderRadius: 16,
+            padding: '1.8rem 1.6rem',
+          }}
+        >
+          <input
+            name="name"
+            placeholder="Name"
+            aria-label="Name"
+            required
+            className="field"
+            style={inputStyle}
+          />
+          <input
+            name="phone"
+            type="tel"
+            placeholder="Phone"
+            aria-label="Phone"
+            required
+            className="field"
+            style={inputStyle}
+          />
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            aria-label="Email"
+            className="field"
+            style={inputStyle}
+          />
+          <input
+            name="city"
+            placeholder="City"
+            aria-label="City"
+            className="field"
+            style={inputStyle}
+          />
+          <input
+            name="company"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              left: '-9999px',
+              width: 1,
+              height: 1,
+              opacity: 0,
+            }}
+          />
+          <textarea
+            name="message"
+            placeholder="Tell us about the space — garage, patio, basement, square footage…"
+            aria-label="Project details"
+            rows={4}
+            required
+            className="field"
+            style={{ ...inputStyle, gridColumn: '1 / -1', resize: 'vertical' }}
+          />
+          <div style={{ gridColumn: '1 / -1' }}>
+            <button
+              type="submit"
+              disabled={status === 'sending'}
+              className="btn-solid"
+              style={{
+                background: '#0DA0D4',
+                color: '#050505',
+                border: 'none',
+                fontFamily: 'var(--font-archivo), sans-serif',
+                fontWeight: 500,
+                fontSize: '0.7rem',
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase',
+                padding: '0.9rem 2.6rem',
+                borderRadius: 40,
+                cursor: status === 'sending' ? 'wait' : 'pointer',
+                opacity: status === 'sending' ? 0.7 : 1,
+              }}
+            >
+              {status === 'sending' ? 'Sending…' : 'Request Free Estimate'}
+            </button>
+            <div aria-live="polite">
+              {status === 'sent' && (
+                <p style={{ color: '#0DA0D4', marginTop: '0.9rem', fontSize: '0.9rem' }}>
+                  Got it — we&rsquo;ll reach out to schedule your estimate.
+                </p>
+              )}
+              {status === 'mailto' && (
+                <p style={{ color: '#DDD8D2', marginTop: '0.9rem', fontSize: '0.9rem' }}>
+                  Your email app should open with everything filled in — just
+                  press send. Nothing opened? Email us at{' '}
+                  <a href={`mailto:${quoteTo}`} style={{ color: '#0DA0D4' }}>
+                    {quoteTo}
+                  </a>
+                  .
+                </p>
+              )}
+              {status === 'error' && (
+                <p style={{ color: '#DDD8D2', marginTop: '0.9rem', fontSize: '0.9rem' }}>
+                  Something went wrong — please email us at{' '}
+                  <a href={`mailto:${quoteTo}`} style={{ color: '#0DA0D4' }}>
+                    {quoteTo}
+                  </a>{' '}
+                  instead.
+                </p>
+              )}
+            </div>
+          </div>
+        </form>
+      </Reveal>
     </section>
   );
 }

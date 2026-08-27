@@ -65,9 +65,15 @@ export async function POST(request: Request) {
   });
 
   try {
+    const quoteTo =
+      'quoteEmail' in business &&
+      typeof business.quoteEmail === 'string' &&
+      !business.quoteEmail.toUpperCase().includes('TODO')
+        ? business.quoteEmail
+        : business.email;
     await transporter.sendMail({
       from: `"${business.name} Website" <${SMTP_USER}>`,
-      to: business.email,
+      to: quoteTo,
       replyTo: validEmail ? email : undefined,
       subject: `New quote request — ${name}${city ? ` (${city})` : ''}`,
       text: [
