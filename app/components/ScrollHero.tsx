@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { FRAME_COUNT, frameSrc } from '@/lib/heroFrames';
+import { frameCount, frameSrc } from '@/lib/heroFrames';
 
 export default function ScrollHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -24,9 +24,10 @@ export default function ScrollHero() {
     const images: HTMLImageElement[] = [];
     let currentIdx = -1;
     let rafId = 0;
-    // Phones get the 960px frame set — a quarter of the bytes, and still
-    // sharper than a DPR-2 phone canvas needs.
+    // Phones get the portrait-cropped frame set: full source height, so
+    // a portrait screen's cover-fit no longer stretches the image soft.
     const frameSize = window.innerWidth <= 820 ? 'sm' : 'lg';
+    const FRAME_COUNT = frameCount(frameSize);
 
     const sizeCanvas = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);

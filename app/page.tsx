@@ -1,4 +1,5 @@
 import ScrollHero from './components/ScrollHero';
+import WorkLoopBackground from './components/WorkLoopBackground';
 import SystemSection from './components/SystemSection';
 import FinishSelector from './components/FinishSelector';
 import SpecsSection from './components/SpecsSection';
@@ -22,14 +23,19 @@ export default function Home() {
   return (
     <main style={{ background: '#050505' }}>
       <ScrollHero />
-      <SystemSection />
-      <FinishSelector />
-      <SpecsSection />
-      <SpacesSection />
-      <ReviewsSection />
-      <PricingSection />
-      <BookingSection smtpConfigured={smtpConfigured} />
-      <ClosingCTA />
+      <div style={{ position: 'relative' }}>
+        <WorkLoopBackground />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <SystemSection />
+          <FinishSelector />
+          <SpecsSection />
+          <SpacesSection />
+          <ReviewsSection />
+          <PricingSection />
+          <BookingSection smtpConfigured={smtpConfigured} />
+          <ClosingCTA />
+        </div>
+      </div>
       <Footer />
     </main>
   );

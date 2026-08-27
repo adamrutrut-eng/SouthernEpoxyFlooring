@@ -45,6 +45,17 @@ function titleCase(slug) {
     .join(' ');
 }
 
+// Curated copy lives in content/*.json once it exists — only seed a
+// content file when it is missing or empty, never overwrite it.
+function contentFileIsEmpty(p) {
+  if (!fs.existsSync(p)) return true;
+  try {
+    return JSON.parse(fs.readFileSync(p, 'utf8')).length === 0;
+  } catch {
+    return true;
+  }
+}
+
 if (fs.existsSync(heroSrc)) {
   const probe = execFileSync('ffprobe', [
     '-v', 'error',
@@ -64,16 +75,22 @@ if (fs.existsSync(heroSrc)) {
     path.join(framesDir, 'frame_%04d.jpg'),
   ], { stdio: 'inherit' });
 
-  // Smaller set for phones (see lib/heroFrames.ts).
+  // Phone set: portrait 4:5 center crop at FULL source height, 12fps.
+  // Portrait phones cover-fit by height, so keeping all 1080 source rows
+  // is what keeps the scrub sharp; the side crop only removes floor that
+  // a phone screen could never show anyway.
   const framesSmDir = path.join(root, 'public', 'frames-sm');
   fs.rmSync(framesSmDir, { recursive: true, force: true });
   fs.mkdirSync(framesSmDir, { recursive: true });
   execFileSync('ffmpeg', [
     '-i', heroSrc,
-    '-vf', 'fps=24,scale=960:-1',
+    '-vf', 'fps=12,crop=ih*4/5:ih:(iw-ih*4/5)/2:0',
     '-q:v', '4',
     path.join(framesSmDir, 'frame_%04d.jpg'),
   ], { stdio: 'inherit' });
+  const frameCountSm = fs
+    .readdirSync(framesSmDir)
+    .filter((f) => /^frame_\d{4}\.jpg$/.test(f)).length;
 
   const frameCount = fs
     .readdirSync(framesDir)
@@ -85,9 +102,12 @@ if (fs.existsSync(heroSrc)) {
   const heroFramesTs = path.join(root, 'lib', 'heroFrames.ts');
   const ts = fs
     .readFileSync(heroFramesTs, 'utf8')
-    .replace(/FRAME_COUNT = \d+/, `FRAME_COUNT = ${frameCount}`);
+    .replace(/FRAME_COUNT_LG = \d+/, `FRAME_COUNT_LG = ${frameCount}`)
+    .replace(/FRAME_COUNT_SM = \d+/, `FRAME_COUNT_SM = ${frameCountSm}`);
   fs.writeFileSync(heroFramesTs, ts);
-  console.log(`Extracted ${frameCount} frames; FRAME_COUNT updated.`);
+  console.log(
+    `Extracted ${frameCount} desktop + ${frameCountSm} phone frames; counts updated.`
+  );
 } else {
   console.log('assets-source/hero.mp4 not found — skipping frames.');
 }
@@ -107,10 +127,10 @@ if (fs.existsSync(finishesSrc)) {
       blurb: BLURBS[slug] ?? 'Full-broadcast flake with a mirror-gloss topcoat.',
     };
   });
-  fs.writeFileSync(
-    path.join(root, 'content', 'finishes.json'),
-    JSON.stringify(entries, null, 2) + '\n'
-  );
+  const finishesJson = path.join(root, 'content', 'finishes.json');
+  if (contentFileIsEmpty(finishesJson)) {
+    fs.writeFileSync(finishesJson, JSON.stringify(entries, null, 2) + '\n');
+  }
   console.log(`Ingested ${entries.length} finishes.`);
 } else {
   console.log('assets-source/finishes/ not found — skipping finishes.');
@@ -133,10 +153,10 @@ if (fs.existsSync(spacesSrc)) {
       blurb: SPACE_BLURBS[slug] ?? 'Seamless flake epoxy with a mirror-gloss topcoat.',
     };
   });
-  fs.writeFileSync(
-    path.join(root, 'content', 'spaces.json'),
-    JSON.stringify(entries, null, 2) + '\n'
-  );
+  const spacesJson = path.join(root, 'content', 'spaces.json');
+  if (contentFileIsEmpty(spacesJson)) {
+    fs.writeFileSync(spacesJson, JSON.stringify(entries, null, 2) + '\n');
+  }
   console.log(`Ingested ${entries.length} spaces.`);
 } else {
   console.log('assets-source/spaces/ not found — skipping spaces.');

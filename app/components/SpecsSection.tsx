@@ -6,94 +6,84 @@ import business from '@/content/business.json';
 const isTodo = (v: unknown) =>
   typeof v !== 'string' || v.length === 0 || v.toUpperCase().includes('TODO');
 
-const cities = (business.serviceCities as string[]).filter((c) => !isTodo(c));
-const serviceArea =
-  cities.length > 0
-    ? `${cities.join(' · ')} — ${business.serviceArea}`
-    : business.serviceArea;
-
-const rows: [string, string][] = [
-  [
-    'Coating System',
-    '100% solids epoxy base · full flake broadcast · polyaspartic topcoat',
-  ],
-  ['Total Thickness', '20–30 mils dry film (8–12× a typical garage paint)'],
-  ['Surface Prep', 'Diamond grinding (CSP 2–3), crack & spall repair'],
-  ['Walk-On Time', '4–6 hours'],
-  ['Drive-On Time', '24 hours'],
-  ['Abrasion Resistance', 'Polyaspartic wear surface built for daily vehicle traffic'],
-  ['Slip-Resistance Additive', 'Available — clear anti-skid aggregate in the topcoat'],
-  ['UV Stability', 'Aliphatic chemistry — non-yellowing, exterior-rated'],
-  ...(isTodo(business.warrantyYears)
-    ? []
-    : ([['Warranty', `${business.warrantyYears}-year installation warranty`]] as [
-        string,
-        string,
-      ][])),
-  ['Service Area', serviceArea],
+const stats: [string, string][] = [
+  ['4–6 hrs', 'walk-on time'],
+  ['24 hrs', 'drive-on time'],
+  ['20–30 mils', 'thick — 8–12× garage paint'],
+  ['0 yellowing', 'UV-stable polyaspartic top'],
 ];
 
 export default function SpecsSection() {
   return (
-    <section className="section" style={{ maxWidth: 900 }}>
+    <section className="section" style={{ maxWidth: 1000, paddingTop: '5rem', paddingBottom: '5rem' }}>
       <Reveal order={0}>
-        <p className="label" style={{ marginBottom: '1rem' }}>
-          System Specifications
+        <p className="label" style={{ marginBottom: '2rem' }}>
+          The Numbers That Matter
         </p>
       </Reveal>
-      <Reveal order={1}>
-        <h2
-          style={{
-            fontFamily: 'var(--font-fraunces), serif',
-            fontWeight: 400,
-            fontSize: 'clamp(1.9rem, 4vw, 3.2rem)',
-            lineHeight: 1.12,
-            color: '#F2EFEA',
-            maxWidth: 640,
-            marginBottom: '3rem',
-          }}
-        >
-          The architecture of a permanent floor.
-        </h2>
-      </Reveal>
-      <div>
-        {rows.map(([label, value], i) => (
-          <Reveal key={label} order={Math.min(i, 4)}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(210px, 100%), 1fr))',
+          gap: '1rem',
+        }}
+      >
+        {stats.map(([big, small], i) => (
+          <Reveal key={big} order={i}>
             <div
               style={{
-                display: 'grid',
-                gridTemplateColumns: 'minmax(140px, 240px) 1fr',
-                gap: '1rem',
-                padding: '1.05rem 0',
-                borderBottom: '1px solid rgba(255,255,255,0.07)',
+                background: 'rgba(13,13,13,0.72)',
+                border: '1px solid rgba(13,160,212,0.18)',
+                borderRadius: 16,
+                padding: '1.6rem 1.5rem',
+                height: '100%',
               }}
             >
-              <span
+              <p
+                style={{
+                  fontFamily: 'var(--font-fraunces), serif',
+                  fontWeight: 400,
+                  fontSize: 'clamp(1.9rem, 3.4vw, 2.6rem)',
+                  color: '#F2EFEA',
+                  lineHeight: 1.05,
+                  marginBottom: '0.5rem',
+                  fontVariantNumeric: 'tabular-nums',
+                }}
+              >
+                {big}
+              </p>
+              <p
                 style={{
                   color: '#0DA0D4',
-                  fontSize: '0.7rem',
-                  letterSpacing: '0.18em',
+                  fontSize: '0.72rem',
+                  letterSpacing: '0.14em',
                   textTransform: 'uppercase',
                   fontWeight: 500,
-                  paddingTop: '0.15rem',
                 }}
               >
-                {label}
-              </span>
-              <span
-                style={{
-                  color: '#DDD8D2',
-                  fontWeight: 300,
-                  fontSize: '0.95rem',
-                  lineHeight: 1.55,
-                }}
-              >
-                {value}
-              </span>
+                {small}
+              </p>
             </div>
           </Reveal>
         ))}
       </div>
+      <Reveal order={4}>
+        <p
+          style={{
+            marginTop: '1.4rem',
+            color: '#8B8B8B',
+            fontWeight: 300,
+            fontSize: '0.85rem',
+            lineHeight: 1.6,
+          }}
+        >
+          Diamond-ground prep on every job · anti-skid additive available ·
+          serving {business.serviceArea}
+          {isTodo(business.warrantyYears)
+            ? ''
+            : ` · ${business.warrantyYears}-year warranty`}
+        </p>
+      </Reveal>
     </section>
   );
 }

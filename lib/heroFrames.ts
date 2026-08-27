@@ -1,11 +1,17 @@
-// FRAME_COUNT is set from the actual number of JPEGs extracted from
-// hero.mp4 into public/frames/ — keep it in sync with that folder.
-// public/frames/ holds 1920px frames; public/frames-sm/ holds 960px
-// frames served to small screens (the hero canvas caps DPR at 2, so
-// 960px covers phone rendering with a quarter of the bytes).
-export const FRAME_COUNT = 289;
+// Frame counts are set from the actual JPEGs extracted from hero.mp4 by
+// scripts/ingest-assets.mjs — keep them in sync with public/frames*.
+// public/frames/   : 1920px-wide landscape frames at 24fps (desktop)
+// public/frames-sm/: portrait 4:5 center-crop at full source height,
+//                    12fps (phones — sharper per byte because portrait
+//                    screens cover-fit by height)
+export const FRAME_COUNT_LG = 289;
+export const FRAME_COUNT_SM = 145;
 
 export type FrameSize = 'lg' | 'sm';
+
+export function frameCount(size: FrameSize): number {
+  return size === 'sm' ? FRAME_COUNT_SM : FRAME_COUNT_LG;
+}
 
 export function frameSrc(index: number, size: FrameSize = 'lg'): string {
   const dir = size === 'sm' ? '/frames-sm' : '/frames';

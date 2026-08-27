@@ -16,7 +16,7 @@ function scrollToBook(e: React.MouseEvent<HTMLAnchorElement>) {
 
 export default function PricingSection() {
   return (
-    <section className="section">
+    <section className="section" style={{ maxWidth: 900, paddingTop: '5rem' }}>
       <Reveal order={0}>
         <p className="label" style={{ marginBottom: '1rem' }}>
           Systems &amp; Pricing
@@ -31,134 +31,119 @@ export default function PricingSection() {
             lineHeight: 1.12,
             color: '#F2EFEA',
             maxWidth: 640,
-            marginBottom: '1.2rem',
+            marginBottom: '2.2rem',
           }}
         >
           Every project, priced on the slab.
         </h2>
       </Reveal>
+
       <Reveal order={2}>
-        <p
+        <div
           style={{
-            color: '#DDD8D2',
-            fontWeight: 300,
-            fontSize: '0.95rem',
-            lineHeight: 1.6,
-            maxWidth: 560,
-            marginBottom: '3rem',
+            background: 'rgba(13,13,13,0.78)',
+            border: '1px solid rgba(13,160,212,0.18)',
+            borderRadius: 16,
+            padding: '0.6rem 1.5rem',
           }}
         >
-          Seven ways to finish concrete, with honest estimated ranges.
-          Condition, square footage, and finish drive the final number — so
-          the exact quote happens in person, on your slab, and it&rsquo;s
-          free.
-        </p>
-      </Reveal>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))',
-          gap: '1.25rem',
-        }}
-      >
-        {tiers.map((tier, i) => (
-          <Reveal key={tier.name} order={i}>
+          {tiers.map((tier, i) => (
             <div
+              key={tier.name}
               style={{
-                background: '#0d0d0d',
-                borderRadius: 16,
-                border: '1px solid rgba(13,160,212,0.18)',
-                padding: '2rem 1.8rem',
-                height: '100%',
                 display: 'flex',
-                flexDirection: 'column',
+                flexWrap: 'wrap',
+                alignItems: 'baseline',
+                gap: '0.35rem 1.25rem',
+                padding: '1.05rem 0',
+                borderBottom:
+                  i < tiers.length - 1
+                    ? '1px solid rgba(255,255,255,0.07)'
+                    : 'none',
               }}
             >
-              <h3
+              <span
                 style={{
                   fontFamily: 'var(--font-fraunces), serif',
-                  fontWeight: 500,
-                  fontSize: '1.35rem',
                   color: '#F2EFEA',
-                  marginBottom: '0.4rem',
+                  fontWeight: 500,
+                  fontSize: '1.1rem',
+                  minWidth: 170,
                 }}
               >
                 {tier.name}
-              </h3>
-              <p
+              </span>
+              <span
+                style={{
+                  color: '#8B8B8B',
+                  fontWeight: 300,
+                  fontSize: '0.85rem',
+                  flex: '1 1 220px',
+                }}
+              >
+                {tier.inclusions[0]}
+              </span>
+              <span
                 style={{
                   color: hasPrices && tier.price ? '#0DA0D4' : '#8B8B8B',
-                  fontSize: '0.8rem',
-                  letterSpacing: '0.12em',
+                  fontSize: '0.78rem',
+                  letterSpacing: '0.1em',
                   textTransform: 'uppercase',
                   fontWeight: 500,
-                  marginBottom: '1.5rem',
+                  fontVariantNumeric: 'tabular-nums',
+                  whiteSpace: 'nowrap',
                 }}
               >
                 {hasPrices && tier.price ? `est. ${tier.price}` : 'Quoted on-site'}
-              </p>
-              <ul
-                style={{
-                  listStyle: 'none',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '0.7rem',
-                  marginBottom: '2rem',
-                  flex: 1,
-                }}
-              >
-                {tier.inclusions.map((inc) => (
-                  <li
-                    key={inc}
-                    style={{
-                      color: '#DDD8D2',
-                      fontWeight: 300,
-                      fontSize: '0.88rem',
-                      lineHeight: 1.5,
-                      paddingLeft: '1.1rem',
-                      position: 'relative',
-                    }}
-                  >
-                    <span
-                      aria-hidden="true"
-                      style={{
-                        position: 'absolute',
-                        left: 0,
-                        top: '0.52em',
-                        width: 5,
-                        height: 5,
-                        borderRadius: '50%',
-                        background: '#0DA0D4',
-                      }}
-                    />
-                    {inc}
-                  </li>
-                ))}
-              </ul>
-              <a
-                href="#book"
-                onClick={scrollToBook}
-                className="btn-outline"
-                style={{
-                  display: 'inline-block',
-                  textAlign: 'center',
-                  border: '1px solid #0DA0D4',
-                  color: '#F2EFEA',
-                  textDecoration: 'none',
-                  fontSize: '0.7rem',
-                  letterSpacing: '0.16em',
-                  textTransform: 'uppercase',
-                  fontWeight: 500,
-                  padding: '0.8rem 1.6rem',
-                  borderRadius: 40,
-                }}
-              >
-                {hasPrices ? 'Get Exact Quote' : 'Free On-Site Quote'}
-              </a>
+              </span>
             </div>
-          </Reveal>
-        ))}
-      </div>
+          ))}
+        </div>
+      </Reveal>
+
+      <Reveal order={3}>
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            gap: '1rem 1.6rem',
+            marginTop: '1.6rem',
+          }}
+        >
+          <a
+            href="#book"
+            onClick={scrollToBook}
+            className="btn-outline"
+            style={{
+              display: 'inline-block',
+              border: '1px solid #0DA0D4',
+              color: '#F2EFEA',
+              textDecoration: 'none',
+              fontSize: '0.7rem',
+              letterSpacing: '0.16em',
+              textTransform: 'uppercase',
+              fontWeight: 500,
+              padding: '0.85rem 2rem',
+              borderRadius: 40,
+            }}
+          >
+            Get Exact Quote
+          </a>
+          <p
+            style={{
+              color: '#8B8B8B',
+              fontWeight: 300,
+              fontSize: '0.82rem',
+              maxWidth: 420,
+              lineHeight: 1.5,
+            }}
+          >
+            Estimated ranges — square footage and slab condition set the
+            final number, in person and free.
+          </p>
+        </div>
+      </Reveal>
     </section>
   );
 }
