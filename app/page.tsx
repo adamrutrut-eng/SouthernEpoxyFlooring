@@ -2,6 +2,7 @@ import ScrollHero from './components/ScrollHero';
 import SystemSection from './components/SystemSection';
 import FinishSelector from './components/FinishSelector';
 import SpecsSection from './components/SpecsSection';
+import SpacesSection from './components/SpacesSection';
 import ReviewsSection from './components/ReviewsSection';
 import PricingSection from './components/PricingSection';
 import BookingSection from './components/BookingSection';
@@ -24,6 +25,7 @@ export default function Home() {
       <SystemSection />
       <FinishSelector />
       <SpecsSection />
+      <SpacesSection />
       <ReviewsSection />
       <PricingSection />
       <BookingSection smtpConfigured={smtpConfigured} />

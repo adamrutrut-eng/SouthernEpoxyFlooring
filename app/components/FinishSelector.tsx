@@ -70,7 +70,7 @@ export default function FinishSelector() {
             borderRadius: 16,
             overflow: 'hidden',
             background: '#0d0d0d',
-            border: '1px solid rgba(201,123,74,0.18)',
+            border: '1px solid rgba(13,160,212,0.18)',
           }}
         >
           {hasFinishes ? (
@@ -151,11 +151,11 @@ export default function FinishSelector() {
                   aria-pressed={i === active}
                   onClick={() => setActive(i)}
                   style={{
-                    background: i === active ? 'rgba(201,123,74,0.12)' : '#0d0d0d',
+                    background: i === active ? 'rgba(13,160,212,0.12)' : '#0d0d0d',
                     color: i === active ? '#F2EFEA' : '#8B8B8B',
                     border:
                       i === active
-                        ? '1px solid #C97B4A'
+                        ? '1px solid #0DA0D4'
                         : '1px solid rgba(255,255,255,0.1)',
                     borderRadius: 40,
                     padding: '0.6rem 1.3rem',

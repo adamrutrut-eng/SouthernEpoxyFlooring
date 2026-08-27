@@ -18,7 +18,7 @@ function Stars({ rating }: { rating: number }) {
       aria-label={`${count} out of 5 stars`}
     >
       {Array.from({ length: count }).map((_, i) => (
-        <svg key={i} viewBox="0 0 24 24" width="14" height="14" fill="#C97B4A" aria-hidden="true">
+        <svg key={i} viewBox="0 0 24 24" width="14" height="14" fill="#0DA0D4" aria-hidden="true">
           <path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.5L12 17.3l-5.9 3.2 1.3-6.5-4.9-4.6 6.6-.8L12 2.5z" />
         </svg>
       ))}
@@ -65,7 +65,7 @@ export default function ReviewsSection() {
               style={{
                 background: '#0d0d0d',
                 borderRadius: 16,
-                borderTop: '1px solid rgba(201,123,74,0.18)',
+                borderTop: '1px solid rgba(13,160,212,0.18)',
                 padding: '1.8rem 1.6rem',
                 height: '100%',
                 display: 'flex',

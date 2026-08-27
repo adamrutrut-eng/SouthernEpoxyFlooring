@@ -138,6 +138,23 @@ export default function ScrollHero() {
           aria-label="A finished epoxy garage floor separating into its five engineered layers as you scroll"
           role="img"
         />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo-mark.png"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            top: 'clamp(1.4rem, 3vw, 2.4rem)',
+            left: 'clamp(2rem, 5vw, 4.5rem)',
+            height: 'clamp(44px, 6vw, 68px)',
+            width: 'auto',
+            // The mark sits on a black tile; screen-blending melts it into
+            // the dark canvas so it reads as a floating chrome mark.
+            mixBlendMode: 'screen',
+            pointerEvents: 'none',
+          }}
+        />
         <div
           style={{
             position: 'absolute',
@@ -163,7 +180,7 @@ export default function ScrollHero() {
               className="label"
               style={{ marginBottom: '1.2rem' }}
             >
-              Southern Epoxy Flooring &middot; Georgia
+              Southern Epoxy Flooring &middot; South Georgia &amp; North Florida
             </motion.p>
             {/* The h1 stays visible in SSR (position-only animation) so the
                 page has an LCP-eligible text block before hydration. */}
@@ -210,7 +227,7 @@ export default function ScrollHero() {
                 className="btn-solid"
                 style={{
                   display: 'inline-block',
-                  background: '#C97B4A',
+                  background: '#0DA0D4',
                   color: '#050505',
                   fontFamily: 'var(--font-archivo), sans-serif',
                   fontWeight: 500,

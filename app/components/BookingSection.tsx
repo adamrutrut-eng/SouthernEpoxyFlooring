@@ -96,20 +96,20 @@ export default function BookingSection({
         {calendlyReady ? (
           <div
             className="calendly-inline-widget"
-            data-url={`${business.calendlyUrl}?hide_gdpr_banner=1&background_color=0d0d0d&text_color=F2EFEA&primary_color=C97B4A`}
+            data-url={`${business.calendlyUrl}?hide_gdpr_banner=1&background_color=0d0d0d&text_color=F2EFEA&primary_color=0DA0D4`}
             style={{
               minWidth: 'min(320px, 100%)',
               height: 700,
               borderRadius: 16,
               overflow: 'hidden',
-              border: '1px solid rgba(201,123,74,0.18)',
+              border: '1px solid rgba(13,160,212,0.18)',
             }}
           />
         ) : (
           <div
             style={{
               background: '#0d0d0d',
-              border: '1px solid rgba(201,123,74,0.18)',
+              border: '1px solid rgba(13,160,212,0.18)',
               borderRadius: 16,
               padding: '3rem 2rem',
               textAlign: 'center',
@@ -159,7 +159,7 @@ export default function BookingSection({
           <a
             href={`mailto:${business.email}`}
             style={{
-              color: '#C97B4A',
+              color: '#0DA0D4',
               textDecoration: 'none',
               fontSize: '0.95rem',
               fontWeight: 400,
@@ -254,7 +254,7 @@ export default function BookingSection({
                 disabled={status === 'sending'}
                 className="btn-solid"
                 style={{
-                  background: '#C97B4A',
+                  background: '#0DA0D4',
                   color: '#050505',
                   border: 'none',
                   fontFamily: 'var(--font-archivo), sans-serif',
@@ -272,7 +272,7 @@ export default function BookingSection({
               </button>
               <div aria-live="polite">
                 {status === 'sent' && (
-                  <p style={{ color: '#C97B4A', marginTop: '0.9rem', fontSize: '0.9rem' }}>
+                  <p style={{ color: '#0DA0D4', marginTop: '0.9rem', fontSize: '0.9rem' }}>
                     Got it — we&rsquo;ll reach out to schedule your estimate.
                   </p>
                 )}

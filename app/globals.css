@@ -9,10 +9,10 @@
   --panel: #0d0d0d;
   --text-primary: #F2EFEA;
   --text-body: #DDD8D2;
-  --accent: #C97B4A;
-  --accent-hover: #E39A6B;
+  --accent: #0DA0D4;
+  --accent-hover: #3FBAE8;
   --text-dim: #8B8B8B;
-  --border-subtle: rgba(201, 123, 74, 0.18);
+  --border-subtle: rgba(13, 160, 212, 0.18);
   --radius-card: 16px;
   --radius-pill: 40px;
 }
@@ -30,7 +30,7 @@ body {
 }
 
 ::selection {
-  background: rgba(201, 123, 74, 0.35);
+  background: rgba(13, 160, 212, 0.35);
   color: #F2EFEA;
 }
 
@@ -81,7 +81,7 @@ button:focus-visible {
 
 .field:focus {
   border-color: var(--accent) !important;
-  outline: 1px solid rgba(201, 123, 74, 0.5);
+  outline: 1px solid rgba(13, 160, 212, 0.5);
   outline-offset: 1px;
 }
 

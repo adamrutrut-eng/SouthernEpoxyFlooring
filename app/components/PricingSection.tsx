@@ -65,7 +65,7 @@ export default function PricingSection() {
               style={{
                 background: '#0d0d0d',
                 borderRadius: 16,
-                border: '1px solid rgba(201,123,74,0.18)',
+                border: '1px solid rgba(13,160,212,0.18)',
                 padding: '2rem 1.8rem',
                 height: '100%',
                 display: 'flex',
@@ -85,7 +85,7 @@ export default function PricingSection() {
               </h3>
               <p
                 style={{
-                  color: hasPrices && tier.price ? '#C97B4A' : '#8B8B8B',
+                  color: hasPrices && tier.price ? '#0DA0D4' : '#8B8B8B',
                   fontSize: '0.8rem',
                   letterSpacing: '0.12em',
                   textTransform: 'uppercase',
@@ -126,7 +126,7 @@ export default function PricingSection() {
                         width: 5,
                         height: 5,
                         borderRadius: '50%',
-                        background: '#C97B4A',
+                        background: '#0DA0D4',
                       }}
                     />
                     {inc}
@@ -140,7 +140,7 @@ export default function PricingSection() {
                 style={{
                   display: 'inline-block',
                   textAlign: 'center',
-                  border: '1px solid #C97B4A',
+                  border: '1px solid #0DA0D4',
                   color: '#F2EFEA',
                   textDecoration: 'none',
                   fontSize: '0.7rem',

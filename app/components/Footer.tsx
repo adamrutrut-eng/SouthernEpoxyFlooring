@@ -70,7 +70,7 @@ export default function Footer() {
           </a>
           <span>
             Serving {cities.length > 0 ? `${cities.join(', ')} — ` : ''}
-            {business.state}
+            {business.serviceArea}
           </span>
         </div>
       </div>

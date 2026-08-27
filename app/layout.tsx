@@ -24,10 +24,9 @@ const cityPhrase = cities.length > 0 ? ` Serving ${cities.join(', ')}.` : '';
 
 export const metadata: Metadata = {
   metadataBase: new URL(`https://${business.domain}`),
-  title:
-    'Southern Epoxy Flooring | Premium Garage & Concrete Coatings in Georgia',
+  title: `Southern Epoxy Flooring | Premium Garage & Concrete Coatings in ${business.serviceArea}`,
   description:
-    `Premium epoxy flooring and garage floor coatings across ${business.state}. ` +
+    `Premium epoxy flooring and garage floor coatings across ${business.serviceArea}. ` +
     `100% solids epoxy, full-broadcast flake, and UV-stable polyaspartic topcoats — ` +
     `most floors installed in a day, built for decades.${cityPhrase} Book a free on-site estimate.`,
   keywords: [
@@ -36,18 +35,19 @@ export const metadata: Metadata = {
     'polyaspartic floor coating',
     'flake epoxy floor',
     'concrete coatings',
-    `epoxy flooring ${business.state}`,
+    'epoxy flooring South Georgia',
+    'epoxy flooring North Florida',
     ...cities.map((c) => `epoxy flooring ${c}`),
   ],
   openGraph: {
-    title:
-      'Southern Epoxy Flooring | Premium Garage & Concrete Coatings in Georgia',
+    title: `Southern Epoxy Flooring | Premium Garage & Concrete Coatings in ${business.serviceArea}`,
     description:
       'Five engineered layers. One seamless finish. Built for decades. Book a free on-site estimate.',
     url: `https://${business.domain}`,
     siteName: business.name,
     locale: 'en_US',
     type: 'website',
+    images: ['/og.jpg'],
   },
 };
 
@@ -63,8 +63,12 @@ const structuredData = {
     'Premium epoxy and polyaspartic concrete floor coatings for garages, patios, basements, and commercial spaces.',
   areaServed:
     cities.length > 0
-      ? cities.map((c) => ({ '@type': 'City', name: `${c}, ${business.state}` }))
-      : { '@type': 'State', name: business.state },
+      ? cities.map((c) => ({ '@type': 'City', name: c }))
+      : [
+          { '@type': 'State', name: 'Georgia' },
+          { '@type': 'State', name: 'Florida' },
+        ],
+  logo: `https://${business.domain}/logo.png`,
 };
 
 export default function RootLayout({

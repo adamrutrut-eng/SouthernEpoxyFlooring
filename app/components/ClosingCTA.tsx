@@ -20,9 +20,18 @@ export default function ClosingCTA() {
       }}
     >
       <Reveal order={0}>
-        <p className="label" style={{ marginBottom: '1.4rem' }}>
-          Southern Epoxy Flooring
-        </p>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo.png"
+          alt="Southern Epoxy Flooring"
+          style={{
+            width: 'min(220px, 55vw)',
+            height: 'auto',
+            margin: '0 auto 1.6rem',
+            display: 'block',
+            mixBlendMode: 'screen',
+          }}
+        />
       </Reveal>
       <Reveal order={1}>
         <h2
@@ -68,21 +77,21 @@ export default function ClosingCTA() {
               width: 'min(480px, 92vw)',
               height: 220,
               background:
-                'radial-gradient(ellipse, rgba(201,123,74,0.10) 0%, transparent 70%)',
+                'radial-gradient(ellipse, rgba(13,160,212,0.10) 0%, transparent 70%)',
               pointerEvents: 'none',
             }}
           />
           <motion.a
             href="#book"
             onClick={scrollToBook}
-            whileHover={{ backgroundColor: '#C97B4A', color: '#050505' }}
+            whileHover={{ backgroundColor: '#0DA0D4', color: '#050505' }}
             transition={{ duration: 0.25 }}
             style={{
               position: 'relative',
               display: 'inline-block',
-              border: '1px solid #C97B4A',
+              border: '1px solid #0DA0D4',
               color: '#F2EFEA',
-              backgroundColor: 'rgba(201,123,74,0)',
+              backgroundColor: 'rgba(13,160,212,0)',
               textDecoration: 'none',
               fontFamily: 'var(--font-archivo), sans-serif',
               fontWeight: 500,

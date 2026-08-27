@@ -1,39 +1,56 @@
 # Generated visual assets — where they live and how to install them
 
-All hero/finish visuals were generated in the business's Higgsfield account
-on 2026-08-26 (they also appear under **Generations** at higgsfield.ai).
-Direct download links:
+All visuals were generated in the business's Higgsfield account (they also
+appear under **Generations** at higgsfield.ai). The current, brand-matched
+set (chrome/blue, generated 2026-08-27) is below. The hero video download
+link is added once rendering finishes — check the latest commit of this file
+or the Higgsfield Generations page.
 
 | Asset | Destination in repo | Download |
 |---|---|---|
-| Hero video (12s, 1080p) | `assets-source/hero.mp4` | [hero.mp4](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260826_052108_9e6ccfff-9105-47c1-9b44-a48c5ea4bdd0.mp4) |
-| Tuxedo finish | `assets-source/finishes/tuxedo.jpg` | [tuxedo](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260826_052051_d123e8cf-204b-4342-bd71-1e9693011f01.png) |
-| Gravel finish | `assets-source/finishes/gravel.jpg` | [gravel](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260826_052051_e88b6a59-bbbc-4602-befc-1da3347dbb8c.png) |
-| Saddle finish | `assets-source/finishes/saddle.jpg` | [saddle](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260826_052051_58d1e9fc-68ee-4cc4-8004-b975627640d0.png) |
-| Outback finish | `assets-source/finishes/outback.jpg` | [outback](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260826_052051_5187fed4-330f-4bfd-ac63-5caeac325419.png) |
-| Slate Metallic finish | `assets-source/finishes/slate-metallic.jpg` | [slate-metallic](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260826_052051_188eda5d-b0f5-42d9-9b3c-9bd3fc69c304.png) |
-| Base floor (reference) | not used on site | [base](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260826_051259_ff1f527a-f372-4d5f-87b8-13de4b76dbec.png) |
-| Exploded layers (reference) | not used on site | [exploded](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260826_051754_be408811-addb-4d00-aad6-baf9e08cfd06.png) |
+| Hero video v2 (12s, 1080p, blue blend + logo ending) | `assets-source/hero.mp4` | see Higgsfield Generations (newest video) |
+| Social banner with logo | `assets-source/og.png` | [og](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260827_051201_63f9749c-fa5a-47dd-99e4-66573d561b54.png) |
+| Patio space | `assets-source/spaces/patio.png` | [patio](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260827_051201_067a4dbf-8057-4a46-a6e2-59a15d5b8153.png) |
+| Showroom space | `assets-source/spaces/showroom.png` | [showroom](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260827_051201_25ac0455-4331-4ef4-8133-64d9fbe8f9ef.png) |
+| Basement space | `assets-source/spaces/basement.png` | [basement](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260827_051201_e455e505-3023-4a15-a527-18453583451b.png) |
+| Base floor v2 (reference) | not used on site | [base v2](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260827_050933_69dd55dc-338d-48e4-89ee-e0156e94540d.png) |
+| Exploded layers v2 (reference) | not used on site | [exploded v2](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260827_051201_7c1b1e7b-29f8-4ad3-bbd9-d02bf63e17dd.png) |
+
+Finish-selector variants (from the first generation round — the garage
+environment differs slightly from base v2 but is internally consistent
+across all five, which is what the selector needs):
+
+| Finish | Destination | Download |
+|---|---|---|
+| Tuxedo | `assets-source/finishes/tuxedo.png` | [tuxedo](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260826_052051_d123e8cf-204b-4342-bd71-1e9693011f01.png) |
+| Gravel | `assets-source/finishes/gravel.png` | [gravel](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260826_052051_e88b6a59-bbbc-4602-befc-1da3347dbb8c.png) |
+| Saddle | `assets-source/finishes/saddle.png` | [saddle](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260826_052051_58d1e9fc-68ee-4cc4-8004-b975627640d0.png) |
+| Outback | `assets-source/finishes/outback.png` | [outback](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260826_052051_5187fed4-330f-4bfd-ac63-5caeac325419.png) |
+| Slate Metallic | `assets-source/finishes/slate-metallic.png` | [slate-metallic](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260826_052051_188eda5d-b0f5-42d9-9b3c-9bd3fc69c304.png) |
+
+Superseded (copper-era, kept for reference): the 2026-08-26 hero video and
+base/exploded stills in the Higgsfield Generations history.
 
 ## Installing them
 
-Once the files are in `assets-source/` (and `assets-source/finishes/`), run:
+Put the files at the destinations above (create `assets-source/`,
+`assets-source/finishes/`, `assets-source/spaces/`), then run:
 
 ```
 node scripts/ingest-assets.mjs
 ```
 
-That extracts the hero frames into `public/frames/`, copies
-`public/hero.mp4` and `public/finishes/`, updates `FRAME_COUNT`, and
-regenerates `content/finishes.json`. Then commit `public/` and the two
-updated files. (Convert the finish PNGs to JPG first if you want smaller
-pages — `ffmpeg -i in.png -q:v 3 out.jpg` — or just keep `.png` filenames
-and the script will use those.)
+That extracts `public/frames/frame_XXXX.jpg` (24fps, 1920px, JPEG q3) from
+hero.mp4, copies `public/hero.mp4`, `public/finishes/`, `public/spaces/`,
+and `public/og.jpg`, updates `FRAME_COUNT` in `lib/heroFrames.ts`, and
+regenerates `content/finishes.json` + `content/spaces.json`. Commit the
+result.
 
 **Note for Claude Code sessions:** this repo's cloud environment blocked
 `d8j0ntlcm91z4.cloudfront.net` at the network policy level. Either run the
 download in an environment that allows that host, or have the files
 committed via the GitHub web UI, then run the ingest script.
 
-The logo is intentionally NOT generated — use the client's real, approved
-logo file only.
+The logo is the client's real mark (committed at `public/logo.png`,
+`public/logo-mark.png`, `app/icon.png`) — never replace it with an
+AI-generated one.

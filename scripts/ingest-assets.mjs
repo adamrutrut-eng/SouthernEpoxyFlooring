@@ -8,6 +8,8 @@
  *                                  (24fps, 1920px wide) and lib/heroFrames.ts
  *                                  FRAME_COUNT is rewritten to the real count
  * - assets-source/finishes/*.jpg|png -> public/finishes/ and content/finishes.json
+ * - assets-source/spaces/*.jpg|png   -> public/spaces/ and content/spaces.json
+ * - assets-source/og.jpg|png         -> public/og.jpg (social share image)
  *
  * Requires ffmpeg/ffprobe on PATH.
  */
@@ -28,6 +30,12 @@ const BLURBS = {
   saddle: 'Warm tan and brown — reads like stone underfoot.',
   outback: 'Earth-tone multicolor — forgiving, organic, warm.',
   'slate-metallic': 'Deep gray pearlescent metallic with a subtle swirl.',
+};
+
+const SPACE_BLURBS = {
+  patio: 'Covered patios and outdoor slabs — UV-stable, weather-ready.',
+  showroom: 'Showrooms and shop floors that carry real traffic.',
+  basement: 'Basements sealed against moisture, finished like living space.',
 };
 
 function titleCase(slug) {
@@ -95,4 +103,43 @@ if (fs.existsSync(finishesSrc)) {
   console.log(`Ingested ${entries.length} finishes.`);
 } else {
   console.log('assets-source/finishes/ not found — skipping finishes.');
+}
+
+const spacesSrc = path.join(src, 'spaces');
+const spacesDst = path.join(root, 'public', 'spaces');
+if (fs.existsSync(spacesSrc)) {
+  fs.mkdirSync(spacesDst, { recursive: true });
+  const files = fs
+    .readdirSync(spacesSrc)
+    .filter((f) => /\.(jpe?g|png|webp)$/i.test(f))
+    .sort();
+  const entries = files.map((f) => {
+    fs.copyFileSync(path.join(spacesSrc, f), path.join(spacesDst, f));
+    const slug = f.replace(/\.[^.]+$/, '').toLowerCase();
+    return {
+      name: titleCase(slug),
+      file: f,
+      blurb: SPACE_BLURBS[slug] ?? 'Seamless flake epoxy with a mirror-gloss topcoat.',
+    };
+  });
+  fs.writeFileSync(
+    path.join(root, 'content', 'spaces.json'),
+    JSON.stringify(entries, null, 2) + '\n'
+  );
+  console.log(`Ingested ${entries.length} spaces.`);
+} else {
+  console.log('assets-source/spaces/ not found — skipping spaces.');
+}
+
+for (const ext of ['jpg', 'jpeg', 'png']) {
+  const og = path.join(src, `og.${ext}`);
+  if (fs.existsSync(og)) {
+    if (ext === 'png') {
+      execFileSync('ffmpeg', ['-y', '-i', og, '-q:v', '3', path.join(root, 'public', 'og.jpg')]);
+    } else {
+      fs.copyFileSync(og, path.join(root, 'public', 'og.jpg'));
+    }
+    console.log('Ingested og.jpg.');
+    break;
+  }
 }

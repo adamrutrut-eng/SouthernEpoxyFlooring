@@ -8,7 +8,9 @@ const isTodo = (v: unknown) =>
 
 const cities = (business.serviceCities as string[]).filter((c) => !isTodo(c));
 const serviceArea =
-  cities.length > 0 ? `${cities.join(' · ')} — ${business.state}` : business.state;
+  cities.length > 0
+    ? `${cities.join(' · ')} — ${business.serviceArea}`
+    : business.serviceArea;
 
 const rows: [string, string][] = [
   [
@@ -68,7 +70,7 @@ export default function SpecsSection() {
             >
               <span
                 style={{
-                  color: '#C97B4A',
+                  color: '#0DA0D4',
                   fontSize: '0.7rem',
                   letterSpacing: '0.18em',
                   textTransform: 'uppercase',
