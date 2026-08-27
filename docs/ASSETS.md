@@ -8,7 +8,7 @@ or the Higgsfield Generations page.
 
 | Asset | Destination in repo | Download |
 |---|---|---|
-| Hero video v2 (12s, 1080p, blue blend + logo ending) | `assets-source/hero.mp4` | see Higgsfield Generations (newest video) |
+| Hero video v2 (12s, 1080p, blue blend + logo ending) | `assets-source/hero.mp4` | [hero.mp4](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260827_051342_81ba9817-0753-441f-8260-1ec7bd201602.mp4) |
 | Social banner with logo | `assets-source/og.png` | [og](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260827_051201_63f9749c-fa5a-47dd-99e4-66573d561b54.png) |
 | Patio space | `assets-source/spaces/patio.png` | [patio](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260827_051201_067a4dbf-8057-4a46-a6e2-59a15d5b8153.png) |
 | Showroom space | `assets-source/spaces/showroom.png` | [showroom](https://d8j0ntlcm91z4.cloudfront.net/user_3Bk0VmEE1F1oHhl3J1J9LrV5LNO/hf_20260827_051201_25ac0455-4331-4ef4-8133-64d9fbe8f9ef.png) |
