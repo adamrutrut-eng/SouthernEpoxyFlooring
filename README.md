@@ -1,4 +1,4 @@
-# Southern Epoxy Flooring — southernepoxyflooring.com
+# Southern Epoxy Flooring — southern-epoxy.com
 
 High-end, scroll-driven marketing site for Southern Epoxy Flooring
 (South Georgia & North Florida). Next.js 15 / React 19 / Framer Motion,
@@ -67,6 +67,8 @@ npm run build   # static export into out/
    (the code after `/f/` in its endpoint) into `formspreeId` in
    `content/business.json` and push. Until then the form falls back to
    opening the visitor's mail app.
-3. Site settings → **Domain management** → add `southernepoxyflooring.com`
-   + `www`, then point GoDaddy DNS at the records Netlify shows.
-   **Do not touch MX/TXT records — they carry the business email.**
+3. Site settings → **Domain management** → add `southern-epoxy.com`
+   + `www`, then point the domain's DNS at the records Netlify shows.
+   If the old southernepoxyflooring.com domain is kept, only its A/CNAME
+   records may be repointed — **never its MX/TXT records, which carry
+   the business email.**
