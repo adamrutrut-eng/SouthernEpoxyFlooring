@@ -1,0 +1,37 @@
+# Netlify build settings — imported automatically, nothing to configure
+# in the Netlify UI.
+[build]
+  command = "npm run build"
+  publish = "out"
+
+# The scroll-scrub frames and media never change once deployed (a new
+# deploy gets new URLs anyway), so let browsers cache them for a year.
+[[headers]]
+  for = "/frames/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/frames-sm/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/finishes/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/spaces/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/work-loop.*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/hero.mp4"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

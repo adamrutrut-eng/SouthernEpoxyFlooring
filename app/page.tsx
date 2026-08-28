@@ -11,15 +11,6 @@ import ClosingCTA from './components/ClosingCTA';
 import Footer from './components/Footer';
 
 export default function Home() {
-  // The quote form only exists when the server actually has SMTP
-  // credentials — otherwise Calendly stands alone.
-  const smtpConfigured = Boolean(
-    process.env.SMTP_HOST &&
-      process.env.SMTP_PORT &&
-      process.env.SMTP_USER &&
-      process.env.SMTP_PASS
-  );
-
   return (
     <main style={{ background: '#050505' }}>
       <ScrollHero />
@@ -32,7 +23,7 @@ export default function Home() {
           <SpacesSection />
           <ReviewsSection />
           <PricingSection />
-          <BookingSection smtpConfigured={smtpConfigured} />
+          <BookingSection />
           <ClosingCTA />
         </div>
       </div>

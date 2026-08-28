@@ -17,6 +17,10 @@ const quoteTo = !isTodo((business as Record<string, unknown>).quoteEmail)
   ? (business as { quoteEmail: string }).quoteEmail
   : business.email;
 
+// Formspree carries the form once its ID is pasted into business.json;
+// until then submissions fall back to opening the visitor's email app.
+const formspreeReady = !isTodo(business.formspreeId);
+
 const inputStyle: React.CSSProperties = {
   width: '100%',
   background: '#0d0d0d',
@@ -30,11 +34,7 @@ const inputStyle: React.CSSProperties = {
   outline: 'none',
 };
 
-export default function BookingSection({
-  smtpConfigured,
-}: {
-  smtpConfigured: boolean;
-}) {
+export default function BookingSection() {
   const [status, setStatus] = useState<
     'idle' | 'sending' | 'sent' | 'mailto' | 'error'
   >('idle');
@@ -58,18 +58,19 @@ export default function BookingSection({
       string
     >;
     // Honeypot: real visitors never see or fill this field.
-    if (typeof data.company === 'string' && data.company !== '') {
+    if (typeof data._gotcha === 'string' && data._gotcha !== '') {
       setStatus('sent');
       form.reset();
       return;
     }
 
-    if (!smtpConfigured) {
-      // No mail server configured yet: open the visitor's own email app
-      // with everything pre-filled instead.
-      const subject = `Free estimate request — ${data.name || ''}${
-        data.city ? ` (${data.city})` : ''
-      }`;
+    const subject = `Free estimate request — ${data.name || ''}${
+      data.city ? ` (${data.city})` : ''
+    }`;
+
+    if (!formspreeReady) {
+      // No Formspree form connected yet: open the visitor's own email
+      // app with everything pre-filled instead.
       const body = [
         `Name: ${data.name || ''}`,
         `Phone: ${data.phone || ''}`,
@@ -87,11 +88,24 @@ export default function BookingSection({
 
     setStatus('sending');
     try {
-      const res = await fetch('/api/quote', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
+      const res = await fetch(
+        `https://formspree.io/f/${business.formspreeId}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            name: data.name,
+            phone: data.phone,
+            email: data.email,
+            city: data.city,
+            message: data.message,
+            _subject: subject,
+          }),
+        }
+      );
       if (!res.ok) throw new Error('send failed');
       setStatus('sent');
       form.reset();
@@ -211,7 +225,7 @@ export default function BookingSection({
             style={inputStyle}
           />
           <input
-            name="company"
+            name="_gotcha"
             tabIndex={-1}
             autoComplete="off"
             aria-hidden="true"
